@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASUO Student Government</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+  </style>
+</html>
+<style>
+    /* CSS Reset & Variables */
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+    
+    :root {
+      --primary: #0f4c3a;
+      --primary-light: #1a6b4f;
+      --accent:  #FFD200;
+      --accent-light:  #FFD200;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --text-primary: #1a202c;
+      --text-secondary: #4a5568;
+      --text-muted: #718096;
+      --border: #e2e8f0;
+      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    }
+
+    html { 
+      scroll-behavior: smooth; 
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      line-height: 1.6;
+      color: var(--text-primary);
+      background-color: var(--surface-alt);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    /* Top Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .logo:hover {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .dropdown-toggle:hover {
+      background: var(--surface-alt);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--surface);
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      padding: 0.5rem;
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+
+    .dropdown-menu.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .dropdown-menu a:hover {
+      background: var(--surface-alt);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      z-index: -2;
+    }
+
+    .hero-pattern {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(0, 212, 170, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(0, 212, 170, 0.1) 0%, transparent 50%);
+      z-index: -1;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      padding: 0 2rem;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Social Links */
+    .social-section {
+      text-align: center;
+      padding: 2rem 0;
+      background: var(--surface);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: var(--surface-alt);
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Main Content */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .section {
+      margin-bottom: 5rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 400;
+    }
+
+    /* Mission Section */
+    .mission {
+      background: var(--surface);
+      padding: 4rem 2rem;
+      border-radius: 24px;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+    }
+
+    .mission-text {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    /* Cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      border: 1px solid var(--border);
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-image {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3rem;
+    }
+
+    .card-content {
+      padding: 1.5rem;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .card-description {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Announcements */
+    .announcements-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .announcement {
+      background: var(--surface);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border-left: 4px solid var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .announcement-text {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Calendar */
+    .calendar-container {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .calendar-container iframe {
+      border-radius: 8px;
+      width: 100%;
+      height: 500px;
+      border: none;
+    }
+
+    /* Contact */
+    .contact-info {
+      text-align: center;
+      background: var(--surface);
+      padding: 3rem 2rem;
+      border-radius: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .contact-info p {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .contact-info a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .contact-info a:hover {
+      color: var(--accent);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer p {
+      opacity: 0.8;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Loading state */
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* Error state */
+    .error-message {
+      text-align: center;
+      padding: 2rem;
+      color: #e53e3e;
+      background: #fed7d7;
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+    @media (max-width: 768px) {
+      .nav-container {
+        padding: 1rem;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .main-content {
+        padding: 2rem 1rem;
+      }
+      
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <img src="2024-ASUO-Seal-BLK.png" alt="ASUO Logo" style="height: 35px; vertical-align: middle; margin-right: 0.1rem; margin-top: -4px;">
+        ASUO
+      </a>
+      <ul class="nav-links">
+        <li><a href="#mission">About</a></li>
+        <li><a href="#announcements">Announcements</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#calendar">Calendar</a></li>
+        <li><a href="passed-resolutions.html">Passed Resolutions</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="dropdown">
+          <div class="dropdown-toggle">
+            I am a <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="dropdown-menu">
+            <a href="#">Undergraduate</a>
+            <a href="#">Graduate</a>
+            <a href="#">Alumni</a>
+            <a href="current-officer.html">Current Officer</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-pattern"></div>
+    <div class="hero-content">
+      <h1>ASUO Student Government</h1>
+      <p>Representing and serving the student body through engagement, advocacy, and positive change across campus.</p>
+      <div class="hero-buttons">
+        <a href="https://uoregon.joinhandshake.com/job-search/10112227?query=ASUO&per_page=25&sort=relevance&page=1" target="_blank" class="btn btn-primary">Apply On Handshake</a>
+        <a href="meet-the-directors.html" class="btn btn-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Links -->
+  <section class="social-section">
+    <div class="social-links">
+      <a href=https://www.instagram.com/asuogov?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      <a href="https://www.linkedin.com/company/asuo/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Mission Section -->
+    <section id="mission" class="section">
+      <div class="mission">
+        <div class="section-header">
+          <h2 class="section-title">Our Mission</h2>
+        </div>
+        <p class="mission-text">
+          We are dedicated to representing and serving the student body by fostering engagement, advocacy, and positive change across campus. Together, we build a stronger university community.
+        </p>
+      </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Campus Events</h2>
+        <p class="section-subtitle">Join us for exciting events throughout the academic year</p>
+      </div>
+      <div class="cards-grid" id="eventsList">
+        <!-- Events will be loaded dynamically -->
+        <div class="loading">Loading events...</div>
+      </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section id="calendar" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Live Calendar</h2>
+        <p class="section-subtitle">Stay up to date with all upcoming ASUO events and meetings</p>
+      </div>
+      <div class="calendar-container">
+        <iframe src="https://calendar.google.com/calendar/embed?src=youremail%40gmail.com&ctz=America/Los_Angeles" frameborder="0" scrolling="no"></iframe>
+      </div>
+    </section>
+
+    <!-- Passed Resolutions Section -->
+    <section id="resolutions" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Passed Resolutions</h2>
+        <p class="section-subtitle">View important resolutions passed by ASUO</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-image">
+            <i class="fas fa-file-signature"></i>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">ASUO Financial Transparency Resolution</h3>
+            <p class="card-description">A resolution to promote financial transparency within ASUO. Read the full text for details.</p>
+            <a href="passed-resolutions.html" class="btn btn-primary" style="margin-top: 1rem;">View Resolutions</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Contact Us</h2>
+        <p class="section-subtitle">Have questions or feedback? We'd love to hear from you!</p>
+      </div>
+      <div class="contact-info">
+        <p>Email: <a href="mailto:asuogov@uoregon.edu">asuogov@uoregon.edu</a></p>
+        <p>EMU 004 University of Oregon, Eugene, OR 97403</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Associated Students of the University of Oregon (ASUO)</p>
+  </footer>
+
+  <script>
+    // Content Management System
+    class ContentManager {
+      constructor() {
+        this.announcementsContainer = document.getElementById('announcementsList');
+        this.eventsContainer = document.getElementById('eventsList');
+        this.init();
+      }
+
+      async init() {
+        await Promise.all([
+          this.loadAnnouncements(),
+          this.loadEvents()
+        ]);
+        // Refresh content every 5 minutes
+        setInterval(() => this.loadContent(), 5 * 60 * 1000);
+      }
+
+      async loadContent() {
+        try {
+          await Promise.all([
+            this.loadAnnouncements(),
+            this.loadEvents()
+          ]);
+        } catch (error) {
+          console.error('Error loading content:', error);
+        }
+      }
+
+      async loadAnnouncements() {
+        try {
+          // Option 1: Load from JSON file (you'll need to update this file weekly)
+          const response = await fetch('/data/announcements.json');
+          if (!response.ok) {
+            // Fallback to static data if file doesn't exist
+            this.renderAnnouncements(this.getStaticAnnouncements());
+            return;
+          }
+          const announcements = await response.json();
+          this.renderAnnouncements(announcements);
+        } catch (error) {
+          // Fallback to static content
+          this.renderAnnouncements(this.getStaticAnnouncements());
+        }
+      }
+
+      // Parse CSV utility for events
+      parseCSV(text) {
+        const lines = text.trim().split('\n');
+        const headers = lines.shift().split(',');
+        return lines.map(line => {
+          const values = line.split(',');
+          return headers.reduce((obj, key, i) => {
+            obj[key.trim()] = values[i] ? values[i].trim() : '';
+            return obj;
+          }, {});
+        });
+      }
+
+      async loadEvents() {
+        try {
+          // Load from Google Sheets CSV (replace YOUR_SHEET_ID with actual ID)
+          const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTqhC-waBGOSA1dqvoQk2Q0gsQPUDWLJqwJbSgihrhvVxcekCvNUe2Jtp9EB7JYM1mnr9d7gP-TatPP/pub?output=csv');
+          if (!response.ok) {
+            this.renderEvents([]);
+            return;
+          }
+          const csvText = await response.text();
+          const events = this.parseCSV(csvText);
+          console.log(events); // 👈 Add this
+          this.renderEvents(events);
+        } catch (error) {
+          this.renderEvents([]);
+        }
+      }
+
+      getStaticAnnouncements() {
+        return [
+          {
+            id: 1,
+            text: "Student-led chat this Thursday! Cookies and drinks provided.",
+            date: "2025-07-21"
+          },
+          {
+            id: 2,
+            text: "Applications for Fall Leadership positions now open.",
+            date: "2025-07-20"
+          }
+        ];
+      }
+
+
+      renderAnnouncements(announcements) {
+        if (!announcements || announcements.length === 0) {
+          this.announcementsContainer.innerHTML = '<div class="error-message">No announcements available</div>';
+          return;
+        }
+
+        const html = announcements.map(announcement => `
+          <div class="announcement">
+            <p class="announcement-text">${announcement.text}</p>
+            ${announcement.date ? `<small style="color: var(--text-muted); font-size: 0.9em;">${new Date(announcement.date).toLocaleDateString()}</small>` : ''}
+          </div>
+        `).join('');
+
+        this.announcementsContainer.innerHTML = html;
+      }
+
+      renderEvents(events) {
+        if (!events || events.length === 0) {
+          this.eventsContainer.innerHTML = '<div class="error-message">No events available</div>';
+          return;
+        }
+
+        const html = events.map(event => `
+          <div class="card">
+            <div class="card-image">
+              ${
+                event.image
+                  ? `<img src="${event.image}" alt="${event.title}" style="width: 100%; height: 100%; object-fit: cover;">`
+                  : `<i class="${event.icon || 'fas fa-calendar'}"></i>`
+              }
+            </div>
+            <div class="card-content">
+              <h3 class="card-title">${event.title}</h3>
+              <p class="card-description">${event.description}</p>
+              ${event.link ? `<a href="${event.link}" target="_blank" style="display: inline-block; margin-top: 0.5rem; color: var(--primary); font-weight: 500;">Learn more</a>` : ''}
+              ${event.date ? `<small style="color: var(--text-muted); font-size: 0.9em; margin-top: 0.5rem; display: block;">${new Date(event.date).toLocaleDateString()}</small>` : ''}
+            </div>
+          </div>
+        `).join('');
+
+        this.eventsContainer.innerHTML = html;
+      }
+    }
+
+    // Initialize content manager
+    const contentManager = new ContentManager();
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 100) {
+        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+      } else {
+        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+      }
+    });
+
+    // Dropdown functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const dropdown = document.querySelector('.dropdown');
+      const toggle = dropdown.querySelector('.dropdown-toggle');
+      const menu = dropdown.querySelector('.dropdown-menu');
+
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('show');
+      });
+
+      document.addEventListener('click', () => {
+        menu.classList.remove('show');
+      });
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const offsetTop = target.offsetTop - 80;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
