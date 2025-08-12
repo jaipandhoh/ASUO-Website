@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ASUO Current Officer Resources</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Lato&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <style>
+    /* Reset and Base Styles */
+    /* This removes default spacing and makes sure all elements are sized consistently */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body styles: sets the font, text color, background gradient, and minimum height */
+    body {
+      font-family: 'Lato', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      min-height: 100vh;
+      /* This animation makes the page fade in smoothly when loaded */
+      animation: pageLoad 1s ease-out;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    /* Container class centers content and limits maximum width for better readability */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Top Bar */
+    /* This is the colored bar at the top with the logo and navigation links */
+    .top-bar {
+      background: linear-gradient(135deg, #004225 0%, #18453B 100%);
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 1000;
+    }
+
+    /* Inside the top bar, this arranges the logo and links side by side */
+    .top-bar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Logo styles: makes the logo text yellow, bold, bigger, and adds a shadow for contrast */
+    .logo a {
+      color: #FEE123;
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    /* Navigation links in the top bar: displayed horizontally with space between */
+    .top-links {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      gap: 30px;
+    }
+
+    /* Style for each link: white text with some padding and rounded edges */
+    .top-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 20px;
+    }
+
+    /* When hovering over links, background and text color change and link slightly moves up */
+    .top-links a:hover {
+      background: rgba(254, 225, 35, 0.2);
+      color: #FEE123;
+      transform: translateY(-2px);
+    }
+
+    /* Dropdown Styles */
+    /* These styles are for dropdown menus, which show extra options when clicked */
+    .dropdown {
+      position: relative;
+    }
+
+    /* Dropdown toggle is the clickable text that opens the menu */
+    .dropdown-toggle {
+      color: white;
+      cursor: pointer;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    /* Hover effect for dropdown toggle, similar to normal links */
+    .dropdown-toggle:hover {
+      background: rgba(254, 225, 35, 0.2);
+      color: #FEE123;
+    }
+
+    /* Dropdown menu is hidden by default and styled as a white box with rounded corners and shadow */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      display: none;
+      min-width: 180px;
+      overflow: hidden;
+      margin-top: 5px;
+    }
+
+    /* Links inside the dropdown menu: block display with padding and light border between items */
+    .dropdown-menu a {
+      display: block;
+      padding: 12px 20px;
+      color: #333;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    /* Remove border from the last dropdown item */
+    .dropdown-menu a:last-child {
+      border-bottom: none;
+    }
+
+    /* Hover effect for dropdown menu items changes background and text color */
+    .dropdown-menu a:hover {
+      background: linear-gradient(135deg, #FEE123 0%, #f8e71c 100%);
+      color: #004225;
+      transform: none;
+    }
+
+    /* Header */
+    /* This is the large top section with background image and page title */
+    header {
+      position: relative;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* The background area of the header with gradient colors */
+    .hero-slideshow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #004225 0%, #18453B 50%, #FEE123 100%);
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* A semi-transparent dark overlay to make text stand out */
+    .hero-slideshow::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 66, 37, 0.7);
+    }
+
+    /* The main title text in the header */
+    header h1 {
+      position: relative;
+      z-index: 2;
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 3.5rem;
+      text-align: center;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+      animation: fadeInUp 1s ease-out;
+    }
+
+    /* Animation for the header title to fade in and move up smoothly */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Main Content */
+    /* Adds padding around the main container to give space */
+    .container {
+      padding: 60px 20px;
+    }
+
+    /* The section that holds the resources list, styled as a white card with rounded corners and shadow */
+    #resources {
+      background: white;
+      border-radius: 20px;
+      padding: 60px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+      margin: 0 auto;
+      max-width: 800px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* A small colored bar at the top of the resources section for decoration */
+    #resources::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #004225 0%, #FEE123 100%);
+    }
+
+    /* The section title style: big, bold, green text centered with a decorative underline */
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 2.5rem;
+      color: #004225;
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    /* The decorative underline below the section title */
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #FEE123 0%, #004225 100%);
+      border-radius: 2px;
+    }
+
+    /* Resource List */
+    /* List without default bullets, arranged vertically with space between items */
+    .resource-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    /* Each list item starts slightly shifted left and transparent, then animates in */
+    .resource-list li {
+      transform: translateX(-20px);
+      opacity: 0;
+      animation: slideInLeft 0.6s ease-out forwards;
+      position: relative; /* for any additional styling */
+    }
+
+    /* Staggered animation delays for each list item to appear one after another */
+    .resource-list li:nth-child(2) { animation-delay: 0.1s; }
+    .resource-list li:nth-child(3) { animation-delay: 0.2s; }
+    .resource-list li:nth-child(4) { animation-delay: 0.3s; }
+    .resource-list li:nth-child(5) { animation-delay: 0.4s; }
+
+    /* Animation to slide items in from the left and fade in */
+    @keyframes slideInLeft {
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Button styles */
+    /* These links look like buttons with background colors, padding, rounded corners, and shadows */
+    .btn {
+      display: block;
+      background: linear-gradient(135deg, #004225 0%, #18453B 100%);
+      color: white;
+      text-decoration: none;
+      padding: 20px 30px;
+      border-radius: 15px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-align: center;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 25px rgba(0, 66, 37, 0.3);
+      position: relative;
+      overflow: hidden;
+      background-attachment: fixed; /* Keeps background fixed while scrolling */
+    }
+
+    /* A colored sliding effect appears behind the button text on hover */
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #FEE123 0%, #f8e71c 100%);
+      transition: left 0.4s ease;
+      z-index: 0;
+    }
+
+    /* Make sure the button text and icon stay above the sliding background */
+    .btn span,
+    .btn {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* When hovering, the sliding background moves in from the left */
+    .btn:hover::before {
+      left: 0;
+    }
+
+    /* On hover, the text color changes, the button moves up slightly, and shadow becomes stronger */
+    .btn:hover {
+      color: #004225;
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 66, 37, 0.4);
+    }
+
+    /* Small spacing for icons inside buttons */
+    .btn i {
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+
+    /* Button press effect: moves button down slightly when clicked */
+    .btn:active {
+      transform: translateY(-2px);
+      transition: transform 0.1s ease;
+    }
+
+    /* Footer */
+    /* The footer at the bottom with a colored background, white text, and some padding */
+    footer {
+      background: linear-gradient(135deg, #004225 0%, #18453B 100%);
+      color: white;
+      text-align: center;
+      padding: 30px 0;
+      margin-top: 60px;
+      box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    }
+
+    /* Responsive Design */
+    /* These styles adjust the layout and font sizes for smaller screens like tablets and phones */
+    @media (max-width: 768px) {
+      /* Stack the top bar items vertically with space between */
+      .top-bar .container {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      /* Reduce space between top links and allow wrapping to new lines */
+      .top-links {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      /* Smaller header title font size and some horizontal padding */
+      header h1 {
+        font-size: 2.5rem;
+        padding: 0 20px;
+      }
+
+      /* Reduce padding and add margin on sides for resources section */
+      #resources {
+        padding: 40px 30px;
+        margin: 0 10px;
+      }
+
+      /* Smaller section title font size */
+      .section-title {
+        font-size: 2rem;
+      }
+
+      /* Smaller button padding and font size */
+      .btn {
+        padding: 15px 20px;
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      /* Even smaller padding for container on very small screens */
+      .container {
+        padding: 40px 10px;
+      }
+
+      /* Smaller header title font size */
+      header h1 {
+        font-size: 2rem;
+      }
+
+      /* Smaller padding for resources section */
+      #resources {
+        padding: 30px 20px;
+      }
+
+      /* Smaller section title font size */
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      /* Smaller font size for top links */
+      .top-links {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Loading animation for the page */
+    @keyframes pageLoad {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <!-- This is the top navigation bar containing the logo and links -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="logo">
+        <!-- Clicking the logo takes you back to the homepage -->
+        <a href="index.html">ASUO Student Government</a>
+      </div>
+      <ul class="top-links">
+        <!-- Navigation links for the site -->
+        <li><a href="index.html">Home</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <main>
+    <!-- Main Content -->
+    <div class="container">
+      <section id="resources">
+        <!-- Section title -->
+        <h2 class="section-title">Officer Resources</h2>
+        <!-- List of resource links styled as buttons -->
+        <ul class="resource-list">
+          <li><a class="btn" href="Officer_Handbook.pdf" target="_blank"><i class="fas fa-book"></i>Officer Handbook</a></li>
+          <li><a class="btn" href="https://uoregon.campuslabs.com/engage/submitter/form/start/687959" target="_blank"><i class="fas fa-file-alt"></i>Stipend Form</a></li>
+          <li><a class="btn" href="https://uoregon.campuslabs.com/engage/submitter/form/start/383642" target="_blank"><i class="fas fa-sign-in-alt"></i>Student Government Release Form</a></li>
+          <li><a class="btn" href="https://uoregon.campuslabs.com/engage/submitter/form/start/687922" target="_blank"><i class="fas fa-sign-in-alt"></i>Suite Access Request Form</a></li>
+          <li><a class="btn" href="ASUO_Bylaws.pdf" target="_blank"><i class="fas fa-gavel"></i>ASUO Bylaws</a></li>
+          <li><a class="btn" href="Meeting_Minutes.zip" target="_blank"><i class="fas fa-archive"></i>Meeting Minutes</a></li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <!-- The bottom section of the page with copyright information -->
+  <footer>
+    &copy; 2025 Associated Students of the University of Oregon (ASUO)
+  </footer>
+
+  <!-- Dropdown Script -->
+  <!-- This script controls the dropdown menu behavior in the top bar -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Find the dropdown container inside the top bar
+      const dropdown = document.querySelector('.top-bar .dropdown');
+      if (!dropdown) return; // If no dropdown exists, do nothing
+
+      // Find the clickable toggle and the menu itself
+      const toggle = dropdown.querySelector('.dropdown-toggle');
+      const menu = dropdown.querySelector('.dropdown-menu');
+
+      // When the toggle is clicked, show or hide the dropdown menu
+      toggle.addEventListener('click', e => {
+        e.stopPropagation(); // Prevent click from closing menu immediately
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+      });
+
+      // Clicking anywhere else on the page closes the dropdown menu
+      document.addEventListener('click', () => {
+        menu.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>

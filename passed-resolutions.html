@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ASUO Passed Resolutions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Lato&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Lato', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      min-height: 100vh;
+      animation: pageLoad 1s ease-out;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    main { flex: 1; }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    .top-bar {
+      background: linear-gradient(135deg, #004225 0%, #18453B 100%);
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 1000;
+    }
+    .top-bar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo a {
+      color: #FEE123;
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .top-links {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      gap: 30px;
+    }
+    .top-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 20px;
+    }
+    .top-links a:hover {
+      background: rgba(254, 225, 35, 0.2);
+      color: #FEE123;
+      transform: translateY(-2px);
+    }
+    header {
+      position: relative;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-slideshow {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, #004225 0%, #18453B 50%, #FEE123 100%);
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-slideshow::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 66, 37, 0.7);
+    }
+    header h1 {
+      position: relative;
+      z-index: 2;
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 2.5rem;
+      text-align: center;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+      animation: fadeInUp 1s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    #resolutions {
+      background: white;
+      border-radius: 20px;
+      padding: 60px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+      margin: 0 auto;
+      max-width: 800px;
+      position: relative;
+      overflow: hidden;
+    }
+    #resolutions::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #004225 0%, #FEE123 100%);
+    }
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 2.2rem;
+      color: #004225;
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #FEE123 0%, #004225 100%);
+      border-radius: 2px;
+    }
+    .resolution-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .resolution-list li {
+      transform: translateX(-20px);
+      opacity: 0;
+      animation: slideInLeft 0.6s ease-out forwards;
+      position: relative;
+    }
+    .resolution-list li:nth-child(2) { animation-delay: 0.1s; }
+    .resolution-list li:nth-child(3) { animation-delay: 0.2s; }
+    @keyframes slideInLeft {
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .btn {
+      display: block;
+      background: linear-gradient(135deg, #004225 0%, #18453B 100%);
+      color: white;
+      text-decoration: none;
+      padding: 20px 30px;
+      border-radius: 15px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-align: center;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 25px rgba(0, 66, 37, 0.3);
+      position: relative;
+      overflow: hidden;
+      background-attachment: fixed;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #FEE123 0%, #f8e71c 100%);
+      transition: left 0.4s ease;
+      z-index: 0;
+    }
+    .btn span, .btn { position: relative; z-index: 1; }
+    .btn:hover::before { left: 0; }
+    .btn:hover {
+      color: #004225;
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 66, 37, 0.4);
+    }
+    .btn i { margin-right: 10px; font-size: 1.2rem; }
+    .btn:active { transform: translateY(-2px); transition: transform 0.1s ease; }
+    footer {
+      background: linear-gradient(135deg, #004225 0%, #18453B 100%);
+      color: white;
+      text-align: center;
+      padding: 30px 0;
+      margin-top: 60px;
+      box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    }
+    @media (max-width: 768px) {
+      .top-bar .container { flex-direction: column; gap: 20px; }
+      .top-links { gap: 15px; flex-wrap: wrap; justify-content: center; }
+      header h1 { font-size: 2rem; padding: 0 20px; }
+      #resolutions { padding: 40px 30px; margin: 0 10px; }
+      .section-title { font-size: 1.7rem; }
+      .btn { padding: 15px 20px; font-size: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 40px 10px; }
+      header h1 { font-size: 1.3rem; }
+      #resolutions { padding: 30px 10px; }
+      .section-title { font-size: 1.2rem; }
+      .top-links { font-size: 0.9rem; }
+    }
+    @keyframes pageLoad { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="container">
+      <div class="logo">
+        <a href="index.html">ASUO Student Government</a>
+      </div>
+      <ul class="top-links">
+        <li><a href="index.html">Home</a></li>
+      </ul>
+    </div>
+  </div>
+  <main>
+    <div class="container">
+    
+      <section id="resolutions">
+        <h2 class="section-title">ASUO Resolutions Archive</h2>
+        <ul class="resolution-list">
+          <li>
+            <a class="btn" href="https://docs.google.com/document/d/17czsQTtkOR-CLFIJPLbCKfwSm5MsT2a7cM2Ov6-49eo/edit?tab=t.0" target="_blank">
+              <i class="fas fa-file-signature"></i>
+              Enhance Financial Transparency in University Administration
+            </a>
+          </li>
+          <li>
+            <a class="btn" href="https://docs.google.com/document/d/1fJLvdUATjA2Cu0nqvbNGckz1z4KXv8NxGId0Sytjj-o/edit?tab=t.0" target="_blank">
+              <i class="fas fa-file-signature"></i>
+              Support of Transgender and Gender-Diverse Students and Athletes
+            </a>
+          </li>
+          <li>
+            <a class="btn" href="https://docs.google.com/document/d/1aqwuZrXrxxtgSHLrUz1q1n3lpMrto6QhgCgdrHYpJ3w/edit?tab=t.0" target="_blank">
+              <i class="fas fa-file-signature"></i> 
+              Calling on the University of Oregon Board of Trustees to vote for Thermal System Transition Option 2B
+            </a>
+          </li>
+          <li>
+            <a class="btn" href="https://docs.google.com/document/d/1fTYR87vyTOpsF5LSmMqksoXJAzfWqGw2bXmK0nMztYA/edit?tab=t.0" target="_blank">
+              <i class="fas fa-file-signature"></i>
+              Denouncing President Donald J. Trump's Executive Orders
+            </a>
+          </li>
+          <li>
+            <a class="btn" href="https://docs.google.com/document/d/1T7auSjCTuJ-PCotmCR4p7hSHUNdUJ8oYxLw4g1LNASM/edit?tab=t.0" target="_blank">
+              <i class="fas fa-file-signature"></i>
+              Resolution on Bills Under Consideration by the Legislative Branch of the State of Oregon
+            </a>
+          </li>
+          <li>
+            <a class="btn" href="https://docs.google.com/document/d/1K6Z9NoLo7InqiCnIh-yrlLQsPfjJ59_m3i2fRUYsdW8/edit?tab=t.0" target="_blank">
+              <i class="fas fa-file-signature"></i>
+              Support of the University of Oregon Forensics Department
+            </a>
+          </li>
+                      <li>
+              <a class="btn" href="https://docs.google.com/document/d/1BYfR_--oxeJzR36fZx8-HzJ7JPyfTDGiyHRD9BBHTV0/edit?tab=t.0" target="_blank">
+                <i class="fas fa-file-signature"></i>
+                Support of the University of Oregon Athletics Band
+              </a>
+            </li>
+            <li>
+              <a class="btn" href="https://docs.google.com/document/d/1ZGAQqADCOX_bH6siRIM5WIuRu3v4BoSTLXdSfIscSag/edit?tab=t.0" target="_blank">
+                <i class="fas fa-file-signature"></i>
+                Winter Special Election
+              </a>
+            </li>
+            <li>
+              <a class="btn" href="https://docs.google.com/document/d/1R6o3vuqV9tSIf6FAcpJm9CEB1EoaQxqHJin7_nw1k7E/edit?tab=t.0" target="_blank">
+                <i class="fas fa-file-signature"></i>
+                Support of Establishing a Center for Peace and Human Rights at UO
+              </a>
+            </li>
+            <li>
+              <a class="btn" href="https://docs.google.com/document/d/1Ya4YQzxbYSoOKeGsVS0nFACNOqHKFybsjw9McoQ-b3s/edit?tab=t.0" target="_blank">
+                <i class="fas fa-file-signature"></i>
+                Support of the "Stop Campus Hazing Act"
+              </a>
+            </li>
+            <li>
+              <a class="btn" href="https://docs.google.com/document/d/1-41kEw_zwBWd9G1NQp2lRSWCITWoPsOqJYnLnIAXzBM/edit?tab=t.0" target="_blank">
+                <i class="fas fa-file-signature"></i>
+                The L.I.V.E.S. Resolution
+              </a>
+            </li>
+            <li>
+              <a class="btn" href="https://docs.google.com/document/d/1AMTGcwgI4uAeVyr1tIJNYi3ZNpDkozNyaBfBttL8vX4/edit?tab=t.0" target="_blank">
+                <i class="fas fa-file-signature"></i>
+                Protect & Empower Student Freedom of Speech
+              </a>
+            </li>
+            <li>
+              <a class="btn" href="https://docs.google.com/document/d/1pXF_UiI5bD6F3L0e6YrAj5xBsfq82Go4B35w0ZyEsuM/edit?tab=t.0" target="_blank">
+                <i class="fas fa-file-signature"></i>
+                ASUO Senate Resolution for Mandatory Student Organization Attendance
+              </a>
+            </li>
+            <li>
+              <a class="btn" href="https://docs.google.com/document/d/160jXRavSLnrNzB138Z7iDCfj8bs3laGOEfC5W_Orpfc/edit?tab=t.0" target="_blank">
+                <i class="fas fa-file-signature"></i>
+                ASUO Senate Resolution for Winter Special Election 3.0
+              </a>
+            </li>
+          </ul>
+      </section>
+    </div>
+  </main>
+  <footer>
+    &copy; 2025 Associated Students of the University of Oregon (ASUO)
+  </footer>
+</body>
+</html> 
